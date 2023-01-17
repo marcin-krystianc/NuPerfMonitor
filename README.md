@@ -1,2 +1,2 @@
-# TestSelfHostedPlotly
-https://community.plotly.com/t/how-to-display-plotly-graph-on-github-pages/44398
+# NuGet Regression Testing
+Visit https://marcin-krystianc.github.io/TestSelfHostedPlotly
