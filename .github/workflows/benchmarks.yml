@@ -68,21 +68,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: "3.8"
-
-      - name: Cache pip
-        uses: actions/cache@v3
-        with:
-          # This path is specific to Ubuntu
-          path: ~/.cache/pip
-          # Look to see if there is a cache hit for the corresponding requirements file
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-            ${{ runner.os }}-
-            ${{ runner.os }}-
 
       - name: Install dependencies
         run: pip3 install -r requirements.txt
@@ -91,19 +79,10 @@ jobs:
         with:
          path: artifacts
 
-      - name: Display structure of downloaded files
-        run: ls -R
-            
       - name: Process data
         shell: pwsh
         run: |
           Get-ChildItem -File -Path artifacts -Depth 1 | Foreach {. python3 process_results.py $_.fullname data.csv}
-            
-      - name: Upload data
-        uses: actions/upload-artifact@v3
-        with:
-          name: data
-          path: data.csv
 
       - name: Generate graph with Plotly for Python
         if: ${{ false }}
@@ -111,6 +90,44 @@ jobs:
         run: |
           . python3 generate_html.py data.csv index-python.html
 
+      - name: Get alerts
+        id: alerts
+        run: |
+          python3 generate_alert.py data.csv active_regressions.txt
+          if test -f "active_regressions.txt"; then
+            echo "file_exists=true" >> $GITHUB_OUTPUT
+            echo "file_content='$file_content'" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create new issue if necessary
+        if: steps.alerts.outputs.file_exists == 'true'
+        run: |
+          numOpenIssues="$(gh api graphql -F owner=$OWNER -F name=$REPO -f query='
+            query($name: String!, $owner: String!) {
+              repository(owner: $owner, name: $name) {
+                issues(states:OPEN, filterBy: { labels:  ["active_regression"]}){
+                  totalCount
+                }
+              }
+            }
+          ' --jq '.data.repository.issues.totalCount')"
+
+          if [ $numOpenIssues -eq 0 ]; then
+            echo "Creating new issue"
+            gh issue create --title "Active NuGet restore regression" --label "active_regression" --body "\`\`\` $(cat active_regressions.txt)  \`\`\`" --repo $GITHUB_REPOSITORY
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+          
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           file_pattern: 'data.csv'
+
+      - name: Upload data
+        if: steps.alerts.outputs.file_exists == 'true'
+        uses: actions/upload-artifact@v3
+        with:
+          name: active_regressions
+          path: active_regressions.txt
