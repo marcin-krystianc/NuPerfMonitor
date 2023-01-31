@@ -37,7 +37,7 @@ jobs:
   benchmark_dotnet_linux:
     strategy:
       matrix:
-        test_script: [LargeAppCPM-142722b, LargeAppCPM-nostaticgraph-142722b, OrchardCore-5dbd92c, Orleans-eda972a]
+        test_script: [LargeAppCPM64-142722b, LargeAppCPM64-nostaticgraph-142722b, OrchardCore-5dbd92c, Orleans-eda972a]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
