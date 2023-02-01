@@ -1,3 +1,7 @@
+"""Looks for performance regressions in the benchmark results
+Usage:
+    generate_alert.py data.csv regressions.txt
+"""
 
 import sys
 import pandas as pd
@@ -60,13 +64,14 @@ def get_regression(data: pd.DataFrame) -> [str]:
 
     return regressions
 
-data = fetch_csv(sys.argv[1])
-data["timestamp"] = pd.to_datetime(data["timestamp"])
-data = data.loc[data["scenario"] != 'warmup']
-regressions = get_regression(data)
+if __name__ == "__main__":
+    data = fetch_csv(sys.argv[1])
+    data["timestamp"] = pd.to_datetime(data["timestamp"])
+    data = data.loc[data["scenario"] != 'warmup']
+    regressions = get_regression(data)
 
-if regressions:
-    with open(sys.argv[2], 'w') as fp:
-        fp.write('\n'.join([x for x in regressions]))
-elif os.path.exists(sys.argv[2]):
-    os.remove(sys.argv[2])
+    if regressions:
+        with open(sys.argv[2], 'w') as fp:
+            fp.write('\n'.join([x for x in regressions]))
+    elif os.path.exists(sys.argv[2]):
+        os.remove(sys.argv[2])
