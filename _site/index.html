@@ -9,6 +9,7 @@
     <script>
         window.PLOTLYENV=window.PLOTLYENV || {};
         var url1 = 'https://raw.githubusercontent.com/marcin-krystianc/TestSelfHostedPlotly/master/data.csv';
+        var nDays = 180;
         var d3colors = Plotly.d3.scale.category10();
 
         function groupBy(data, key) {
@@ -30,6 +31,9 @@
                 row["duration"] = Number(row["duration"]).toFixed(2);
                 row["base duration"] = Number(row["base duration"]).toFixed(2);
             });
+            var cutoffDate = new Date()
+            cutoffDate = cutoffDate.setDate(cutoffDate.getDate() - nDays);
+            data = rows.filter(row => row["timestamp"] > cutoffDate);
 
             var plotlyData = [];
             var solutionColorMap = new Map();
