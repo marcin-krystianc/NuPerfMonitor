@@ -30,9 +30,6 @@ def fetch_csv(csvPath: str) -> pd.DataFrame:
 
 def get_regression(data: pd.DataFrame) -> [str]:
     regressions = []
-    now = datetime.datetime.now(datetime.timezone.utc)
-    cutoff_date = now - datetime.timedelta(days=n_days)
-    data = data.loc[data["timestamp"] > cutoff_date]
     grouped_data = data.groupby(["scenario", "solution"])
     for (k, d) in grouped_data:
 
@@ -68,6 +65,11 @@ if __name__ == "__main__":
     data = fetch_csv(sys.argv[1])
     data["timestamp"] = pd.to_datetime(data["timestamp"])
     data = data.loc[data["scenario"] != 'warmup']
+
+    now = datetime.datetime.now(datetime.timezone.utc)
+    cutoff_date = now - datetime.timedelta(days=n_days)
+    data = data.loc[data["timestamp"] > cutoff_date]
+
     regressions = get_regression(data)
 
     if regressions:

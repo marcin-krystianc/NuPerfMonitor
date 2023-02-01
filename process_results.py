@@ -1,3 +1,8 @@
+"""Reads the output of NuGet benchmark, calculates new data points (relative duration) and appends data to csv file
+Usage:
+    process_results.py results.csv data.csv
+"""
+
 import re
 import sys
 import os
@@ -27,7 +32,8 @@ def read_results(csvPath: str) -> pd.DataFrame:
                   'relative duration': [duration[i] / base_duration[i] * 100 for i in range(0, nRows)],
                   });
 
-input_csv_path = sys.argv[1]
-output_csv_path = sys.argv[2]
-df = read_results(input_csv_path)
-df.to_csv(output_csv_path, mode='a', index=None, header=not os.path.exists(output_csv_path))
+if __name__ == "__main__":
+    input_csv_path = sys.argv[1]
+    output_csv_path = sys.argv[2]
+    df = read_results(input_csv_path)
+    df.to_csv(output_csv_path, mode='a', index=None, header=not os.path.exists(output_csv_path))

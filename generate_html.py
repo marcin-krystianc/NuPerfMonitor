@@ -1,8 +1,17 @@
+"""Takes the data and generates html with nice Plotly graphs
+Usage:
+    generate_html.py data.csv index.html
+"""
+
 import sys
 import pandas as pd
 import plotly.express as px
+import datetime;
 from pathlib import Path
 from io import StringIO
+
+# number of days to look back
+n_days = 180
 
 def fetch_csv(csvPath: str) -> pd.DataFrame:
     return pd.read_csv(csvPath)
@@ -28,7 +37,13 @@ def plot_cumulative_state(df: pd.DataFrame, outfile: str):
 
     fig.write_html(outfile, include_plotlyjs='cdn')
 
-data = fetch_csv(sys.argv[1])
-data["timestamp"] = pd.to_datetime(data["timestamp"])
-data = data.loc[data["scenario"] != 'warmup']
-plot_cumulative_state(data, sys.argv[2])
+if __name__ == "__main__":
+    data = fetch_csv(sys.argv[1])
+    data["timestamp"] = pd.to_datetime(data["timestamp"])
+    data = data.loc[data["scenario"] != 'warmup']
+
+    now = datetime.datetime.now(datetime.timezone.utc)
+    cutoff_date = now - datetime.timedelta(days=n_days)
+    data = data.loc[data["timestamp"] > cutoff_date]
+
+    plot_cumulative_state(data, sys.argv[2])
