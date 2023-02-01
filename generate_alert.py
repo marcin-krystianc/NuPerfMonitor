@@ -1,20 +1,43 @@
+
 import sys
 import pandas as pd
 import plotly.express as px
+import datetime;
+import time;
+import os;
+
 from pathlib import Path
 from io import StringIO
+
+# number of samples needed to calculate regression
+n_samples = 10
+
+# number of days to look back when calculating regression
+n_days = 14
+
+# threshold in percents
+threshold = 110
+
+# quantile
+q = 0.25
 
 def fetch_csv(csvPath: str) -> pd.DataFrame:
     return pd.read_csv(csvPath)
 
 def get_regression(data: pd.DataFrame) -> [str]:
     regressions = []
+    now = datetime.datetime.now(datetime.timezone.utc)
+    cutoff_date = now - datetime.timedelta(days=n_days)
+    data = data.loc[data["timestamp"] > cutoff_date]
     grouped_data = data.groupby(["scenario", "solution"])
     for (k, d) in grouped_data:
+
+        if len(d["relative duration"].values) < n_samples:
+            continue
+
         # take quantile .25 from last 10 items
-   
-        result = d["relative duration"][-10:].quantile(.25)
-        if result > 110:
+        result = d["relative duration"][-n_samples:].quantile(q)
+        if result > threshold:
             formatters = {
                 'timestamp': (lambda a : a.strftime("%Y-%m-%d %H:%M:%S ")),
                 'duration': (lambda a : "{:.2f}s".format(float(a))),
@@ -25,7 +48,7 @@ def get_regression(data: pd.DataFrame) -> [str]:
             header = "Scenario = " + str(d["scenario"].values[-1]) + "\n" + \
                      "Base Version = " + str(d["base version"].values[-1]) + "\n" + \
                      "Solution = " + str(d["solution"].values[-1])
-            data_string = f'{d[-10:].to_string(header=True, index=False, justify="right", columns=columns, formatters=formatters)}'
+            data_string = f'{d[-n_samples:].to_string(header=True, index=False, justify="right", columns=columns, formatters=formatters)}'
             line_length = len(data_string.splitlines()[0])
             line = '-' * line_length
             regressions.append('\n' + line)
