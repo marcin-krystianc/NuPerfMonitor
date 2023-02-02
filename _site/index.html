@@ -111,7 +111,7 @@
                     var solutionIndex = uniqueSolutions.indexOf(solution);
                     var plotlyDataRow = {
                         customdata: group2.map(d => [d['solution'], d['duration'], d['base duration'], d['version'], d['base version'], d['scenario']]),
-                        hovertemplate: 'Scenario: %{customdata[4]}<br>Test case: %{customdata[0]}<br>Timestamp: %{x}><br>Duration: %{customdata[1]}s<br>Base duration: %{customdata[2]}s<br>Relative duration: %{y}<br>Version: %{customdata[3]}<br>Base version: %{customdata[4]}<br><extra></extra>',
+                        hovertemplate: 'Scenario: %{customdata[5]}<br>Test case: %{customdata[0]}<br>Timestamp: %{x}><br>Duration: %{customdata[1]}s<br>Base duration: %{customdata[2]}s<br>Relative duration: %{y}<br>Version: %{customdata[3]}<br>Base version: %{customdata[4]}<br><extra></extra>',
                         legendgroup: solution,
                         x: group2.map(d => d['timestamp']),
                         y: group2.map(d => d['relative duration']),
