@@ -148,6 +148,25 @@
                     "domain": [0, 1],
                     "matches": "x",
                     "showticklabels": scenarioIndex == 0 ? true : false,
+                    "rangeselector": {
+                        "buttons": [
+                            {
+                                "count": 1,
+                                "label": "1m",
+                                "step": "month",
+                                "stepmode": "backward"
+                            },
+                            {
+                                "count": 1,
+                                "label": "1y",
+                                "step": "year",
+                                "stepmode": "backward"
+                            },
+                            {
+                                "step": "all"
+                            }
+                        ]
+                    }
                 };
 
                 plotlyLayout["yaxis" + getIndexAsString(scenarioIndex)] = {
