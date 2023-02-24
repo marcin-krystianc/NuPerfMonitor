@@ -1,4 +1,4 @@
 
 #########################################################
-. "$PSScriptRoot\..\\NuGet.Client\scripts\perftests\PerformanceTestUtilities.ps1"
+. "NuGet.Client\scripts\perftests\PerformanceTestUtilities.ps1"
 $ErrorActionPreference = "Stop"

@@ -7,7 +7,7 @@ $solutionFilePath = "OrchardCore.sln"
 $globalJsonPath = ""
 
 #########################################################
-. "Init.ps1"
+. "$PSScriptRoot\Init.ps1"
 
 $repoName = GenerateNameFromGitUrl $repoUrl
 $resultsFilePath = "results.csv"

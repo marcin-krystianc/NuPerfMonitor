@@ -7,7 +7,7 @@ $solutionFilePath = "LargeAppWithPrivatePackagesCentralisedNGBVRemoved\solution\
 $globalJsonPath = ""
 
 #########################################################
-. "Init.ps1"
+. "$PSScriptRoot\Init.ps1"
 
 $repoName = GenerateNameFromGitUrl $repoUrl
 $resultsFilePath = "results.csv"
