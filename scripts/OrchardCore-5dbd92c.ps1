@@ -1,14 +1,13 @@
 #########################################################
-$dotnet_base_url = "https://download.visualstudio.microsoft.com/download/pr/253e5af8-41aa-48c6-86f1-39a51b44afdc/5bb2cb9380c5b1a7f0153e0a2775727b/dotnet-sdk-7.0.100-linux-x64.tar.gz"
-$dotnet_url = "https://aka.ms/dotnet/8.0.1xx/daily/dotnet-sdk-linux-x64.tar.gz"
-$repoUrl = "https://github.com/marcin-krystianc/TestSolutions.git"
-$commitHash = "142722bebfe90c4e5c98303fa1598db6a760adae"
-$solutionFilePath = "LargeAppWithPrivatePackagesCentralisedNGBVRemoved\solution\LargeAppWithPrivatePackagesCentralisedNGBVRemoved.sln"
+$dotnet_base_url = "https://download.visualstudio.microsoft.com/download/pr/cd0d0a4d-2a6a-4d0d-b42e-dfd3b880e222/008a93f83aba6d1acf75ded3d2cfba24/dotnet-sdk-6.0.400-linux-x64.tar.gz"
+$dotnet_url = Get-Content -Path $PSScriptRoot\daily-linux.txt
+$repoUrl = "https://github.com/OrchardCMS/OrchardCore.git"
+$commitHash = "5dbd92cb06cee203b95e0b3bc133d852adf3fbeb"
+$solutionFilePath = "OrchardCore.sln"
 $globalJsonPath = ""
 
 #########################################################
-$ErrorActionPreference = "Stop"
-. "$PSScriptRoot\..\PerformanceTestUtilities.ps1"
+. "Init.ps1"
 
 $repoName = GenerateNameFromGitUrl $repoUrl
 $resultsFilePath = "results.csv"

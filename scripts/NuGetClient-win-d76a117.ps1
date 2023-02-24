@@ -7,8 +7,7 @@ $solutionFilePath = "NuGet.sln"
 $globalJsonPath = "global.json"
 
 #########################################################
-$ErrorActionPreference = "Stop"
-. "$PSScriptRoot\..\PerformanceTestUtilities.ps1"
+. "Init.ps1"
 
 $repoName = GenerateNameFromGitUrl $repoUrl
 $resultsFilePath = "results.csv"

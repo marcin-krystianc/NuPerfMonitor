@@ -7,8 +7,7 @@ $solutionFilePath = "LargeAppWithPrivatePackagesCentralisedNGBVRemoved\solution\
 $globalJsonPath = ""
 
 #########################################################
-$ErrorActionPreference = "Stop"
-. "$PSScriptRoot\..\PerformanceTestUtilities.ps1"
+. "Init.ps1"
 
 $repoName = GenerateNameFromGitUrl $repoUrl
 $resultsFilePath = "results.csv"
@@ -24,5 +23,5 @@ ForEach ($version In $versions) {
 	Invoke-WebRequest -Uri "$url" -OutFile ("$version" + ".tar.gz")
 	New-Item -Name "$version" -ItemType "Directory"
 	. tar xfz ("$version" + ".tar.gz") --directory "$version"
-	. "$PSScriptRoot\..\RunPerformanceTests.ps1" -nugetClientFilePath "$version\dotnet" -solutionFilePath $solutionFilePath -resultsFilePath $resultsFilePath -iterationCount 1 -staticGraphRestore
+	. "$PSScriptRoot\..\RunPerformanceTests.ps1" -nugetClientFilePath "$version\dotnet" -solutionFilePath $solutionFilePath -resultsFilePath $resultsFilePath -iterationCount 1
 }
