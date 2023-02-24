@@ -23,5 +23,5 @@ ForEach ($version In $versions) {
 	Invoke-WebRequest -Uri "$url" -OutFile ("$version" + ".tar.gz")
 	New-Item -Name "$version" -ItemType "Directory"
 	. tar xfz ("$version" + ".tar.gz") --directory "$version"
-	. "$PSScriptRoot\..\RunPerformanceTests.ps1" -nugetClientFilePath "$version\dotnet" -solutionFilePath $solutionFilePath -resultsFilePath $resultsFilePath -iterationCount 1
+	. "$PSScriptRoot\RunPerformanceTests.ps1" -nugetClientFilePath "$version\dotnet" -solutionFilePath $solutionFilePath -resultsFilePath $resultsFilePath -iterationCount 1
 }
