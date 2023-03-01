@@ -13,7 +13,7 @@ It happened in the past that there were some changes in NuGet that performed ver
 ## How it works
 - [Scripts](https://github.com/NuGet/NuGet.Client/tree/dev/scripts/perftests) from the [NuGet.Client](https://github.com/NuGet/NuGet.Client) repository with custom [test cases](https://github.com/marcin-krystianc/NuGetRegressionTesting/tree/master/scripts/perftests/testCases).are are used for benchmarks, 
 - GitHub Actions and GitHub-hosted runners are used to run benchmarks on a [daily schedule](https://github.com/marcin-krystianc/NuGetRegressionTesting/blob/master/.github/workflows/benchmarks.yml)
-- Python script is used to [process results](https://github.com/marcin-krystianc/NuGetRegressionTesting/blob/master/process_results.py) into a [data.csv](https://github.com/marcin-krystianc/NuGetRegressionTesting/blob/master/data.csv) file that makes it easy to plot charts and can be used further data analysis.
+- Python script is used to [process results](https://github.com/marcin-krystianc/NuGetRegressionTesting/blob/master/process_results.py) and append it to the [data.csv](https://github.com/marcin-krystianc/NuGetRegressionTesting/blob/master/data.csv) file that makes it easy to plot charts and can be used further data analysis.
 - There is also another python script that is used to [generate alerts](https://github.com/marcin-krystianc/NuGetRegressionTesting/blob/master/generate_alert.py). In case of performance regression is found a new Issue is opened.
 - [Plotly.js](https://plotly.com/javascript/) is used to [generate](https://github.com/marcin-krystianc/NuGetRegressionTesting/blob/master/_site/index.html) charts with results.
 
