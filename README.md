@@ -19,4 +19,8 @@ It happened in the past that there were some changes in NuGet that performed ver
 
 It is worth noting that NuGet Regression Testing uses GitHub-hosted runners to run the benchmark, therefore it cannot just assume what is the performance of the particular runner's VM or how it is going to change over time. Therefore, each test job runs actually two tests, one test for the baseline version and one test for the current version. By measuring the relative performance of the current version, the NuGet Regression Testing is independent of the infrastructure that is running it.
 
-## Interested in contributing?
+## Contributing
+Contributions are welcome! Whenever you have any suggestions or ideas to be implemented, we encourage you to:
+
+* [File an issue](https://github.com/marcin-krystianc/TestSelfHostedPlotly/issues/new/choose)
+* [Submit a pull request](https://github.com/marcin-krystianc/TestSelfHostedPlotly/pulls)
