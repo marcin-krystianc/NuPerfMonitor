@@ -17,4 +17,6 @@ It happened in the past that there were some changes in NuGet that performed ver
 - There is also another python script that is used to [generate alerts](https://github.com/marcin-krystianc/TestSelfHostedPlotly/blob/master/generate_alert.py). In case of performance regression is found a new Issue is opened.
 - [Plotly.js](https://plotly.com/javascript/) is used to [generate](https://github.com/marcin-krystianc/TestSelfHostedPlotly/blob/master/_site/index.html) charts with results.
 
+It is worth noting that NuGet Regression Testing uses GitHub-hosted runners to run the benchmark, therefore it cannot just assume what is the performance of the particular runner's VM or how it is going to change over time. Therefore, each test job runs actually two tests, one test for the baseline version and one test for the current version. By measuring the relative performance of the current version, the NuGet Regression Testing is independent of the infrastructure that is running it.
+
 ## Interested in contributing?
