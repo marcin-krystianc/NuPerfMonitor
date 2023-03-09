@@ -13,7 +13,7 @@ jobs:
   benchmark_dotnet_windows:
     strategy:
       matrix:
-        test_script: [NuGetClient-win-d76a117]
+        test_script: []
       fail-fast: false
     runs-on: windows-latest
     steps:
