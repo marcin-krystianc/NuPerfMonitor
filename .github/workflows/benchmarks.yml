@@ -2,7 +2,6 @@ name: benchmark_dotnet
 
 on:
   push:
-    branches: [main]
   workflow_dispatch:
   schedule:
     - cron: '0 */8 * * *' # Run workflow threee times a day
@@ -124,6 +123,7 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           file_pattern: 'data.csv'
+          commit_author: 'github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
 
       - name: Upload data
         if: steps.alerts.outputs.file_exists == 'true'
