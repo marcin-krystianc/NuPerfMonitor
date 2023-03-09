@@ -121,6 +121,7 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           file_pattern: 'data.csv'
+          push_options: '--force'
 
       - name: Upload data
         if: steps.alerts.outputs.file_exists == 'true'
